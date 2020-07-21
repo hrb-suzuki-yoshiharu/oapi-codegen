@@ -238,6 +238,9 @@ func GenerateGoSchema(sref *openapi3.SchemaRef, path []string) (Schema, error) {
 			} else {
 				return Schema{}, fmt.Errorf("invalid integer format: %s", f)
 			}
+			if _, ok := schema.Extensions["x-unsigned"]; ok {
+				outSchema.GoType = "u" + outSchema.GoType
+			}
 		case "number":
 			// We default to float for "number"
 			if f == "double" {
